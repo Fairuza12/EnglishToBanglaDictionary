@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Dictionary_Assignment</string>
+    <string name="Button1">Lets Go</string>
+    <string name="Button2">Search Words</string>
+</resources>
