@@ -53,7 +53,7 @@ public class Search extends AppCompatActivity {
         setContentView(R.layout.activity_search);
         final EditText text = findViewById(R.id.searchText);
         Button search = findViewById(R.id.btnSearch);
-        textView = (TextView)findViewById(R.id.searchText);
+        textView = (TextView)findViewById(R.id.showText);
         search.setOnClickListener(new View.OnClickListener() {
             @Override
             /*take word inputs*/
@@ -170,7 +170,7 @@ public class Search extends AppCompatActivity {
             }
             int convertedNumber = stringToNumber(hashKey);
             int number = primaryHash(convertedNumber);
-            if(wordOfASlot[number]==0){
+            if(wordOfASlot[number]<=1){
                 WordModel wordModel = new WordModel(hashKey,hashValue);
                 wordList.set(number, wordModel);
             }
