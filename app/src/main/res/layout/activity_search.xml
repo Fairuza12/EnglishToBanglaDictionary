@@ -18,5 +18,9 @@
         android:layout_height="wrap_content"
         android:id="@+id/btnSearch"
         android:text="Search"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/showText"/>
 
 </LinearLayout>

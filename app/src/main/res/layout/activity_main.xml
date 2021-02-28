@@ -6,10 +6,10 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".MainActivity">
-    <Button
+    <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/Button1"
-        android:id="@+id/search_button"
-        android:onClick="showSearch"/>
+        android:id="@+id/searchText"
+        android:hint="@string/Button2"
+        android:textColor="#000000"/>
 </LinearLayout>
