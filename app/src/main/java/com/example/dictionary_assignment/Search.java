@@ -118,24 +118,26 @@ public class Search extends AppCompatActivity {
         hashFunction();
     }
 
-    //Toast.makeText(getApplicationContext(),wordList.toString(),Toast.LENGTH_LONG).show();
+    /*
+    Toast.makeText(getApplicationContext(),wordList.toString(),Toast.LENGTH_LONG).show();
+    InputStream is = getAssets().open("E2Bdatabase.json");
+         int size = is.available();
+         byte[] Buffer = new byte[size];
+         is.read();
+         is.close();
+         json = new String(Buffer,"UTF-8");
+         JSONArray jsonArray = new JSONArray(json);
+
+         slotNo = jsonArray.length();
+
+         for(int i=0;i<jsonArray.length();i++){
+            JSONObject obj = jsonArray.getJSONObject(i);
+            if(obj.getString("en").equals(word)){
+             wordList.add(obj.getString("bn"));
+         }
+                }
+    Toast.makeText(getApplicationContext(),wordList.toString(),Toast.LENGTH_LONG).show();
+    */
 
 
-    /*InputStream is = getAssets().open("E2Bdatabase.json");
-     int size = is.available();
-     byte[] Buffer = new byte[size];
-     is.read();
-     is.close();
-     json = new String(Buffer,"UTF-8");
-     JSONArray jsonArray = new JSONArray(json);
-
-     slotNo = jsonArray.length();
-
-     for(int i=0;i<jsonArray.length();i++){
-        JSONObject obj = jsonArray.getJSONObject(i);
-        if(obj.getString("en").equals(word)){
-         wordList.add(obj.getString("bn"));
-     }
-            }*/
-    //Toast.makeText(getApplicationContext(),wordList.toString(),Toast.LENGTH_LONG).show();
 }
