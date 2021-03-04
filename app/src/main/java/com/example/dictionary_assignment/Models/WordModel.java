@@ -1,22 +1,22 @@
 package com.example.dictionary_assignment.Models;
 
 public class WordModel {
-    private String English;
-    private String Bangla;
+    private String en;
+    private String bn;
     public WordModel(String English, String Bangla){
-        this.English = English;
-        this.Bangla = Bangla;
+        this.en = English;
+        this.bn = Bangla;
     }
     public String getEnglish(){
-        return English;
+        return en;
     }
     public String getBangla(){
-        return Bangla;
+        return bn;
     }
-    public void setEnglish(String english){
-        English = english;
+    public void setEnglish(String en){
+        this.en = en;
     }
-    public void setBangla(String bangla){
-        Bangla = bangla;
+    public void setBangla(String bn){
+        this.bn = bn;
     }
 }

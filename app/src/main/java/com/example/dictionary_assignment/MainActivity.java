@@ -29,37 +29,16 @@ import java.util.Arrays;
 import java.util.Iterator;
 
 public class MainActivity extends AppCompatActivity {
-    //ArrayList<String> numberList = new ArrayList<>();
-    ArrayList<WordModel> wordList = new ArrayList<>();
-    String json;
-    final int slotNo = 104035;
-    final int prime = (int) (1e9 + 7);
-    int n;
-    String hashKey, hashValue;
-    int hashFunction1;
-    int hashFunction2;
-    int[][] hashArray = new int[slotNo][3];
-    int[] wordOfASlot = new int[slotNo];
-    int[] canWord = new int[slotNo];
-    WordModel[][] SecondTry;
-    String str_data = "";
-    String str_line = "";
-    JSONObject object;
-    int collides = 0;
-    EditText show;
-
-    @RequiresApi(api = Build.VERSION_CODES.N)
+    Button first;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
-        final EditText text = (EditText) findViewById(R.id.searchText);
-        Button search = (Button) findViewById(R.id.btnSearch);
-        search.setOnClickListener(new View.OnClickListener() {
+        first = (Button)findViewById(R.id.HeyMan);
+        first.setOnClickListener(new View.OnClickListener() {
             @Override
-            /*take word inputs*/
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, Search.class);
+                Intent intent = new Intent(MainActivity.this,Search.class);
                 startActivity(intent);
             }
         });
