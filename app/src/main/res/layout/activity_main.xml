@@ -6,9 +6,32 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".MainActivity">
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Search Words"
+        android:layout_margin="10dp"
+        android:layout_gravity="center"
+        android:id="@+id/text"/>
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/HeyMan"
-        android:text="@string/Button1"/>
+        android:text="Let's Go"
+        android:id="@+id/button"
+        android:layout_gravity="center"
+        android:paddingTop="5dp"/>
+   <TextView
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       android:text="বাংলা অর্থ: "
+       android:id="@+id/meaning"
+       android:gravity="center"
+       android:layout_marginTop="30dp" />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="invisible"
+        android:id="@+id/result"
+        android:gravity="left"/>
+
 </LinearLayout>
