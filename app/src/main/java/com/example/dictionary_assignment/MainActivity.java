@@ -1,33 +1,20 @@
 package com.example.dictionary_assignment;
 
-import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.example.dictionary_assignment.Models.WordModel;
+import com.example.dictionary_assignment.WordModel;
 
 import org.json.JSONArray;
 import org.json.JSONException;
-import org.json.JSONObject;
 
-import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.nio.Buffer;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Iterator;
 
 class EnglishBangla
 {
@@ -75,7 +62,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        String[] input = new String[1];
+        final String[] input = new String[1];
         try{
             InputStream is = getAssets().open("E2Bdatabase.json");
             int size = is.available();
@@ -98,6 +85,19 @@ public class MainActivity extends AppCompatActivity {
         }catch (JSONException e){
             e.printStackTrace();
         }
+        banglaTrans.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                input[0] = text.getText().toString();
+                input[0] = input[0].toLowerCase();
+                int key = AsciiEq(input[0]);
+                int key1 = getFirstKey(input[0]);
+                int primaryHashValue = getPrimaryHash(input[0],dictionary.size);
+                String BanglaWord = findBanglaMeaning(input[0],dictionary.size);
+                meaning.setText(BanglaWord);
+                meaning.setVisibility(View.VISIBLE);
+            }
+        });
     }
     public void generateHashTable(int dictionarySize){
         int possibleCollision = 0;
@@ -112,7 +112,10 @@ public class MainActivity extends AppCompatActivity {
         {
             wordModel[i].English = wordModel[i].English.toLowerCase();
             String str = wordModel[i].getEnglish();
+            int primaryHash = getPrimaryHash(str,dictionarySize);
         }
     }
+
+
 }
 
