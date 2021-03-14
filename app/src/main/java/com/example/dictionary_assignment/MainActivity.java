@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.dictionary_assignment.WordModel;
 
@@ -113,6 +114,66 @@ public class MainActivity extends AppCompatActivity {
             wordModel[i].English = wordModel[i].English.toLowerCase();
             String str = wordModel[i].getEnglish();
             int primaryHash = getPrimaryHash(str,dictionarySize);
+            int slot = collisionCount[primaryHash];
+            indexForCollision[primaryHash][slot] = i;
+            collisionCount[primaryHash]++;
+            if (collisionCount[primaryHash]>possibleCollision)
+                possibleCollision = collisionCount[primaryHash];
+            wordModel[i].setPrimaryHash(primaryHash);
+        }
+        Toast.makeText(getApplicationContext(),wordModel[1212].English,Toast.LENGTH_LONG).show();
+        int newSize = possibleCollision*possibleCollision;
+        int[][] newhashArray = new int[dictionarySize][newSize+1000];
+        for(int j=0;j<dictionarySize;j++){
+            int a;
+            int b;
+            int length = collisionCount[j]*collisionCount[j];
+            hashTables[j] = new HashTable(length);
+            int m = length;
+            if(collisionCount[j]>=1)
+            {
+                if(collisionCount[j]==1){
+                    m = 1;
+                    a = 0;
+                    b = 0;
+                    int index = indexForCollision[j][0];
+                    int secondaryHash = getSecondaryHash(a,b,m,wordModel[index].English);
+                    wordModel[index].setSecondaryHash(secondaryHash);
+                    hashTables[j].setA(a);
+                    hashTables[j].setB(b);
+                }
+                else
+                {
+                    int[] secondaryHashTable = new int[m];
+                    for(int i=0;i<collisionCount[j];i++)
+                    {
+                        int index = indexForCollision[j][i];
+                        a = (int)(1+Math.floor(Math.random()*(prime-1)));
+                        b = (int) Math.floor(Math.random()*prime);
+                        int secondaryHash = getSecondaryHash(a,b,m,wordModel[index].English);
+                        if(secondaryHashTable[secondaryHash]==0)
+                            wordModel[index].setSecondaryHash(secondaryHash);
+                        else
+                        {
+                            for(int k=0;k<m;k++)
+                            {
+                                secondaryHashTable[k] = 0;
+                            }
+                            i = 0;
+                            continue;
+                        }
+                        wordModel[index].setSecondaryHash(secondaryHash);
+                        hashTables[j].setA(a);
+                        hashTables[j].setB(b);
+                    }
+                }
+            }
+        }
+        for(int i = 0;i<dictionarySize;i++)
+        {
+            int primaryHash = wordModel[i].getPrimaryHash();
+            int secondaryHash = wordModel[i].getSecondaryHash();
+            indexForCollision[primaryHash][secondaryHash] = i;
         }
     }
 
