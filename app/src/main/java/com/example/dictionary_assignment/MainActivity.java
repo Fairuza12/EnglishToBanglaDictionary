@@ -9,13 +9,12 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.dictionary_assignment.WordModel;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.math.BigInteger;
 
 class EnglishBangla
 {
@@ -56,7 +55,8 @@ public class MainActivity extends AppCompatActivity {
     EditText text = (EditText)findViewById(R.id.text);
     TextView meaning = (TextView)findViewById(R.id.meaning);
     static int prime =  999999937;
-    static int base = 256;
+    int random_a = -1;
+    int random_b = -1;
     EnglishBangla dictionary = new EnglishBangla();
     WordModel[] wordModel;
     @Override
@@ -177,6 +177,45 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    public int getPrimaryHash(String s,int m)
+    {
+        int key1 = this.getFirstKey(s);
+        BigInteger BigKey1 = BigInteger.valueOf(key1);
+        BigInteger dictionarySize = BigInteger.valueOf(m);
+        BigInteger bigPrimaryHash = BigKey1.mod(dictionarySize);
+        int primaryHash = bigPrimaryHash.intValue();
+        return primaryHash;
+    }
 
+    public int getFirstKey(String s)
+    {
+        int a = (int) (1 + Math.floor(Math.random() * (prime - 1)));
+        int b = (int) Math.floor(Math.random()*prime);
+        if(random_a==-1||random_b==-1)
+        {
+            this.random_a = a;
+            this.random_b = b;
+        }
+        else
+        {
+            a = this.random_a;
+            b = this.random_b;
+        }
+        int key1 = this.AsciiEq(s);
+        //BigInteger a1 = BigInteger.valueOf(a);
+        //BigInteger b1 = BigInteger.valueOf(b);
+        //BigInteger k = BigInteger.valueOf(key1);
+        int h1 = (a*key1+b)%prime;
+        return h1;
+    }
+    public int AsciiEq(String str)
+    {
+        int stringkey = 0;
+        for(int i=0;i<str.length();i++)
+        {
+            stringkey = ((stringkey*256)%prime+str.charAt(i))%prime;
+        }
+        return stringkey;
+    }
 }
 
