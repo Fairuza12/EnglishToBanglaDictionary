@@ -2,6 +2,7 @@ package com.example.dictionary_assignment;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -58,7 +59,11 @@ public class MainActivity extends AppCompatActivity {
     int random_a = -1;
     int random_b = -1;
     EnglishBangla dictionary = new EnglishBangla();
+    HashTable[] hashTables;
     WordModel[] wordModel;
+    int[] collisionCount;
+    int[][] newhashArray;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -100,15 +105,47 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+    public String findBanglaMeaning(String englishWord,int dictionarySize)
+    {
+        String banglaWord = "";
+        int inputFunction = getPrimaryHash(englishWord,dictionarySize);
+        if(collisionCount[inputFunction]==0)
+        {
+            banglaWord = "Meaning not found";
+        }
+        if(collisionCount[inputFunction]==1)
+        {
+            int key = newhashArray[inputFunction][0];
+            String str = wordModel[key].English;
+            if(str.equals(englishWord))
+            {
+                banglaWord = wordModel[key].Bangla;
+            }
+        }
+        if(collisionCount[inputFunction]>1)
+        {
+            int a = hashTables[inputFunction].getA();
+            int b = hashTables[inputFunction].getB();
+            int m = hashTables[inputFunction].getTableLength();
+            int secondaryFunction = getSecondaryHash(a,b,m,englishWord);
+            int key = newhashArray[inputFunction][secondaryFunction];
+            String str = wordModel[key].English;
+            if(str.equals(englishWord))
+            {
+                banglaWord = wordModel[key].Bangla;
+            }
+        }
+        return banglaWord;
+    }
     public void generateHashTable(int dictionarySize){
         int possibleCollision = 0;
-        int[] collisionCount = new int[dictionarySize];
+        collisionCount = new int[dictionarySize];
         for(int i=0;i<dictionarySize;i++)
         {
             collisionCount[i] = 0;
         }
         int [][] indexForCollision = new int[dictionarySize][1000];
-        HashTable[] hashTables = new HashTable[dictionarySize];
+        hashTables = new HashTable[dictionarySize];
         for(int i=0;i<dictionarySize;i++)
         {
             wordModel[i].English = wordModel[i].English.toLowerCase();
@@ -123,7 +160,7 @@ public class MainActivity extends AppCompatActivity {
         }
         Toast.makeText(getApplicationContext(),wordModel[1212].English,Toast.LENGTH_LONG).show();
         int newSize = possibleCollision*possibleCollision;
-        int[][] newhashArray = new int[dictionarySize][newSize+1000];
+        newhashArray = new int[dictionarySize][newSize+1000];
         for(int j=0;j<dictionarySize;j++){
             int a;
             int b;
@@ -179,12 +216,12 @@ public class MainActivity extends AppCompatActivity {
 
     public int getPrimaryHash(String s,int m)
     {
-        int key1 = this.getFirstKey(s);
-        BigInteger BigKey1 = BigInteger.valueOf(key1);
-        BigInteger dictionarySize = BigInteger.valueOf(m);
-        BigInteger bigPrimaryHash = BigKey1.mod(dictionarySize);
-        int primaryHash = bigPrimaryHash.intValue();
-        return primaryHash;
+        //int key1 = this.getFirstKey(s);
+        //BigInteger BigKey1 = BigInteger.valueOf(key1);
+        //BigInteger slotSize = BigInteger.valueOf(m);
+        //BigInteger bigPrimaryHash = BigKey1.mod(slotSize);
+        //int primaryHash = bigPrimaryHash.intValue();
+        return this.getFirstKey(s)%m;
     }
 
     public int getFirstKey(String s)
@@ -216,6 +253,16 @@ public class MainActivity extends AppCompatActivity {
             stringkey = ((stringkey*256)%prime+str.charAt(i))%prime;
         }
         return stringkey;
+    }
+    public int getSecondaryHash(int a,int b,int m,String s)
+    {
+        return getSecondKey(a,b,m,s)%m;
+    }
+    public int getSecondKey(int a,int b,int m,String s)
+    {
+        int key1 = this.getFirstKey(s);
+        int key2 = (a*key1+b)%prime;
+        return key2;
     }
 }
 
