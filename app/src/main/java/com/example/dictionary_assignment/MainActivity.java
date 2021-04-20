@@ -74,6 +74,7 @@ public class MainActivity extends AppCompatActivity {
                 input[0] = input[0].toLowerCase();
                 String BanglaWord = findBanglaMeaning(input[0],dictionary.size);
                 Toast.makeText(getApplicationContext(),BanglaWord,Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(),BanglaWord,Toast.LENGTH_SHORT).show();
             }
         });
     }
