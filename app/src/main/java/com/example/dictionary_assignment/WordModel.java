@@ -3,14 +3,12 @@ package com.example.dictionary_assignment;
 public class WordModel {
     String English;
     String Bangla;
-    int primaryHash,secondaryHash;
+    long primaryHash,secondaryHash;
     public WordModel(String English, String Bangla){
         this.English = English;
         this.Bangla = Bangla;
     }
-    public String getEnglish(){
-        return this.English;
-    }
+    public String getEnglish(){ return this.English; }
     public String getBangla(){
         return this.Bangla;
     }
@@ -20,7 +18,7 @@ public class WordModel {
     public void setBangla(String bn){
         this.Bangla = bn;
     }
-    public int getPrimaryHash() {
+    public long getPrimaryHash() {
         return primaryHash;
     }
 
@@ -28,11 +26,11 @@ public class WordModel {
         this.primaryHash = primaryHash;
     }
 
-    public int getSecondaryHash() {
+    public long getSecondaryHash() {
         return secondaryHash;
     }
 
-    public void setSecondaryHash(int secondaryHash) {
+    public void setSecondaryHash(long secondaryHash) {
         this.secondaryHash = secondaryHash;
     }
 }
